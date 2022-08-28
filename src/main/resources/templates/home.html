@@ -10,5 +10,10 @@
     <img th:src="@{/images/shaverma.jpg}"/>
     
     <a th:href="@{/design}" id="design">Design a Shaverma</a>
+    <br>
+    <a th:href="@{/login}" id="login">LOG IN</a>
+    <form method="POST" th:action="@{/logout}" id="logoutForm">
+      <input type="submit" value="Logout"/>
+    </form>
   </body>
 </html>

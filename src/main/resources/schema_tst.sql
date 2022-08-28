@@ -1,4 +1,4 @@
-create table if not exists Ingredient (
+/*create table if not exists Ingredient (
     id varchar(4) not null,
     name varchar(25) not null,
     type varchar(10) not null
@@ -36,3 +36,4 @@ create table if not exists Shaverma_Order_Shavermas (
 
 alter table Shaverma_Order_Shavermas add foreign key (shavermaOrder) references Shaverma_Order(id);
 alter table Shaverma_Order_Shavermas add foreign key (shaverma) references Shaverma(id);
+  */

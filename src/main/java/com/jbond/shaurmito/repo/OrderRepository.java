@@ -1,9 +1,8 @@
 package com.jbond.shaurmito.repo;
 
-import com.jbond.shaurmito.Order;
-import org.springframework.stereotype.Repository;
+import com.jbond.shaurmito.entity.Order;
+import org.springframework.data.repository.CrudRepository;
 
-@Repository
-public interface OrderRepository {
-    Order save(Order order);
+public interface OrderRepository extends CrudRepository<Order, Long> {
+
 }

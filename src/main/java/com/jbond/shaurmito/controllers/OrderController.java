@@ -1,6 +1,7 @@
 // tag::baseClass[]
-package com.jbond.shaurmito;
+package com.jbond.shaurmito.controllers;
 
+import com.jbond.shaurmito.entity.Order;
 import com.jbond.shaurmito.repo.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

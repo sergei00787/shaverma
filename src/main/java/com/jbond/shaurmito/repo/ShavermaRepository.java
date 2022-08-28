@@ -1,7 +1,8 @@
 package com.jbond.shaurmito.repo;
 
-import com.jbond.shaurmito.Shaverma;
+import com.jbond.shaurmito.entity.Shaverma;
+import org.springframework.data.repository.CrudRepository;
 
-public interface ShavermaRepository {
-    Shaverma save(Shaverma shaverma);
+public interface ShavermaRepository extends CrudRepository<Shaverma, Long> {
+
 }
