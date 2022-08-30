@@ -1,0 +1,72 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: BuymovSergey
+      changes:
+        - createSchema
+        - createTable:
+            schemaName: shaverma_schm
+            tableName:  ingredient
+            columns:
+              - column:
+                  name: id
+                  type: varchar(4)
+                  constraints:
+                    primaryKeyName: ingredient_pk
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(25)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: int
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            catalogName: shaverma_schm
+            tableName: shaverma
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    primaryKeyName: shaverma_pk
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: createAt
+                  type: datetime
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            catalogName: shaverma_schm
+            tableName: shaverma_ingredients
+            columns:
+              - column:
+                  name: shaverma
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    referencedTableSchemaName: shaverma_schm
+                    referencedTableName: shaverma
+                    referencedColumnNames: id
+              - column:
+                  name: ingredient
+                  type: varchar(4)
+                  constraints:
+                    nullable: false
+                    referencedTableSchemaName: shaverma_schm
+                    referencedTableName: ingredient
+                    referencedColumnNames: id
+
+
