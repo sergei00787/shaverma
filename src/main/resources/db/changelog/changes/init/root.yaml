@@ -3,7 +3,8 @@ databaseChangeLog:
       id: 1
       author: BuymovSergey
       changes:
-        - createSchema
+        - sql:
+            sql: CREATE SCHEMA if not exists shaverma_schm
         - createTable:
             schemaName: shaverma_schm
             tableName:  ingredient
@@ -25,9 +26,8 @@ databaseChangeLog:
                   type: int
                   constraints:
                     nullable: false
-
         - createTable:
-            catalogName: shaverma_schm
+            schemaName: shaverma_schm
             tableName: shaverma
             columns:
               - column:
@@ -47,9 +47,8 @@ databaseChangeLog:
                   type: datetime
                   constraints:
                     nullable: false
-
         - createTable:
-            catalogName: shaverma_schm
+            schemaName: shaverma_schm
             tableName: shaverma_ingredients
             columns:
               - column:
@@ -57,16 +56,146 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
-                    referencedTableSchemaName: shaverma_schm
-                    referencedTableName: shaverma
-                    referencedColumnNames: id
               - column:
                   name: ingredient
                   type: varchar(4)
                   constraints:
                     nullable: false
-                    referencedTableSchemaName: shaverma_schm
-                    referencedTableName: ingredient
-                    referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseColumnNames: shaverma
+            baseTableName: shaverma_ingredients
+            baseTableSchemaName: shaverma_schm
+            referencedTableName: shaverma
+            referencedColumnNames: id
+            referencedTableSchemaName: shaverma_schm
+            constraintName: shaverma_fk
+        - addForeignKeyConstraint:
+            baseColumnNames: ingredient
+            baseTableName: shaverma_ingredients
+            baseTableSchemaName: shaverma_schm
+            referencedTableName: ingredient
+            referencedColumnNames: id
+            referencedTableSchemaName: shaverma_schm
+            constraintName: ingredient_fk
+
+
+        - createTable:
+            tableName: shaverma_order
+            schemaName: shaverma_schm
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    primaryKeyName: shaverma_order_pk
+                    primaryKey: true
+              - column:
+                  name: deliveryName
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: deliveryStreet
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: deliveryCity
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: deliveryState
+                  type: varchar(2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: deliveryZip
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ccNumber
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ccExpiration
+                  type: varchar(5)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ccCVV
+                  type: varchar(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: placedAt
+                  type: datetime
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: shaverma_order_shavermas
+            schemaName: shaverma_schm
+            columns:
+              - column:
+                  name: shavermaOrder
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: shaverma
+                  type: bigint
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableSchemaName: shaverma_schm
+            baseTableName: shaverma_order_shavermas
+            baseColumnNames: shaverma
+            referencedTableSchemaName: shaverma_schm
+            referencedTableName: shaverma
+            referencedColumnNames: id
+            constraintName: shaverma_order_shavermas_shaverma_fk
+        - addForeignKeyConstraint:
+            baseTableSchemaName: shaverma_schm
+            baseTableName: shaverma_order_shavermas
+            baseColumnNames: shavermaOrder
+            referencedTableSchemaName: shaverma_schm
+            referencedTableName: shaverma_order
+            referencedColumnNames: id
+            constraintName: shaverma_order_shavermas_shaverma_order_fk
+
+        - createTable:
+            tableName: user
+            schemaName: shaverma_schm
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: user_pk
+                  autoIncrement: true
+                  valueSequenceNext: user_id_seq
+              - column:
+                  name: username
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar
+                  constraints:
+                    nullable: false
+
+        - createSequence:
+            schemaName: shaverma_schm
+            sequenceName: user_id_seq
+
 
 

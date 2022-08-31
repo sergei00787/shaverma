@@ -28,6 +28,7 @@ public class Shaverma {
     private String name;
 
     @ManyToMany(targetEntity = Ingredient.class)
+    @JoinTable(name = "shaverma_ingredients")
     @Size(min = 1, message = "You must choose at least 1 ingredient")
     private List<Ingredient> ingredients;
 }

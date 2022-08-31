@@ -17,7 +17,7 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name="Shaverma_Order")
+@Table(name="shaverma_order")
 public class Order implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -54,6 +54,11 @@ public class Order implements Serializable {
   private String ccCVV;
 
   @ManyToMany(targetEntity = Shaverma.class)
+  @JoinTable(
+          name = "shaverma_order_shavermas",
+          joinColumns = { @JoinColumn(name = "shavermaOrder") },
+          inverseJoinColumns = { @JoinColumn(name = "shaverma") }
+  )
   private List<Shaverma> shavermas = new ArrayList<>();
 
   public void addDesignShaverma(Shaverma shaverma) {
