@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @Entity
+@Table(schema = "shaverma_schm",catalog = "liquibase")
 @Data
 @NoArgsConstructor(access= AccessLevel.PRIVATE, force=true)
 @RequiredArgsConstructor

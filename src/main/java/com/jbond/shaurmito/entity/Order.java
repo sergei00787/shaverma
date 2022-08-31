@@ -17,7 +17,7 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name="shaverma_order")
+@Table(name="shaverma_order", schema = "shaverma_schm")
 public class Order implements Serializable {
 
   private static final long serialVersionUID = 1L;

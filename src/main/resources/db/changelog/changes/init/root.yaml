@@ -6,6 +6,7 @@ databaseChangeLog:
         - sql:
             sql: CREATE SCHEMA if not exists shaverma_schm
         - createTable:
+
             schemaName: shaverma_schm
             tableName:  ingredient
             columns:
@@ -78,7 +79,6 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableSchemaName: shaverma_schm
             constraintName: ingredient_fk
-
 
         - createTable:
             tableName: shaverma_order
@@ -170,7 +170,7 @@ databaseChangeLog:
             constraintName: shaverma_order_shavermas_shaverma_order_fk
 
         - createTable:
-            tableName: user
+            tableName: "USER"
             schemaName: shaverma_schm
             columns:
               - column:

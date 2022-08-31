@@ -11,6 +11,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(schema = "shaverma_schm")
 public class Shaverma {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
