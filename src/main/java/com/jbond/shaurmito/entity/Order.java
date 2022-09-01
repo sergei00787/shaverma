@@ -5,6 +5,7 @@ package com.jbond.shaurmito.entity;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -23,7 +24,8 @@ public class Order implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
+  @SequenceGenerator(name = "order_seq", sequenceName = "order_id_seq", schema = "shaverma_schm")
   private Long id;
 
   private Date placedAt;
@@ -38,9 +40,10 @@ public class Order implements Serializable {
   private String deliveryCity;
 
   @NotBlank(message="State is required")
+  @Length(max = 2)
   private String deliveryState;
 
-  @NotBlank(message="Zip code is required")
+  @NotBlank(message = "Zip code is required")
   private String deliveryZip;
 
   @CreditCardNumber(message="Not a valid credit card number")
@@ -51,13 +54,14 @@ public class Order implements Serializable {
   private String ccExpiration;
 
   @Digits(integer=3, fraction=0, message="Invalid CVV")
-  private String ccCVV;
+  private String ccCvv;
 
   @ManyToMany(targetEntity = Shaverma.class)
   @JoinTable(
           name = "shaverma_order_shavermas",
           joinColumns = { @JoinColumn(name = "shavermaOrder") },
-          inverseJoinColumns = { @JoinColumn(name = "shaverma") }
+          inverseJoinColumns = { @JoinColumn(name = "shaverma")},
+          schema = "shaverma_schm"
   )
   private List<Shaverma> shavermas = new ArrayList<>();
 

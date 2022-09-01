@@ -44,7 +44,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: createAt
+                  name: created_at
                   type: datetime
                   constraints:
                     nullable: false
@@ -53,18 +53,18 @@ databaseChangeLog:
             tableName: shaverma_ingredients
             columns:
               - column:
-                  name: shaverma
+                  name: shaverma_id
                   type: bigint
                   constraints:
                     nullable: false
               - column:
-                  name: ingredient
+                  name: ingredients_id
                   type: varchar(4)
                   constraints:
                     nullable: false
 
         - addForeignKeyConstraint:
-            baseColumnNames: shaverma
+            baseColumnNames: shaverma_id
             baseTableName: shaverma_ingredients
             baseTableSchemaName: shaverma_schm
             referencedTableName: shaverma
@@ -72,7 +72,7 @@ databaseChangeLog:
             referencedTableSchemaName: shaverma_schm
             constraintName: shaverma_fk
         - addForeignKeyConstraint:
-            baseColumnNames: ingredient
+            baseColumnNames: ingredients_id
             baseTableName: shaverma_ingredients
             baseTableSchemaName: shaverma_schm
             referencedTableName: ingredient
@@ -92,47 +92,47 @@ databaseChangeLog:
                     primaryKeyName: shaverma_order_pk
                     primaryKey: true
               - column:
-                  name: deliveryName
+                  name: delivery_name
                   type: varchar(50)
                   constraints:
                     nullable: false
               - column:
-                  name: deliveryStreet
+                  name: delivery_street
                   type: varchar(50)
                   constraints:
                     nullable: false
               - column:
-                  name: deliveryCity
+                  name: delivery_city
                   type: varchar(50)
                   constraints:
                     nullable: false
               - column:
-                  name: deliveryState
+                  name: delivery_state
                   type: varchar(2)
                   constraints:
                     nullable: false
               - column:
-                  name: deliveryZip
+                  name: delivery_zip
                   type: varchar(10)
                   constraints:
                     nullable: false
               - column:
-                  name: ccNumber
+                  name: cc_number
                   type: varchar(16)
                   constraints:
                     nullable: false
               - column:
-                  name: ccExpiration
+                  name: cc_expiration
                   type: varchar(5)
                   constraints:
                     nullable: false
               - column:
-                  name: ccCVV
+                  name: cc_cvv
                   type: varchar(3)
                   constraints:
                     nullable: false
               - column:
-                  name: placedAt
+                  name: placed_at
                   type: datetime
                   constraints:
                     nullable: false
@@ -196,6 +196,14 @@ databaseChangeLog:
         - createSequence:
             schemaName: shaverma_schm
             sequenceName: user_id_seq
+
+        - createSequence:
+            schemaName: shaverma_schm
+            sequenceName: shaverma_id_seq
+
+        - createSequence:
+            schemaName: shaverma_schm
+            sequenceName: order_id_seq
 
 
 

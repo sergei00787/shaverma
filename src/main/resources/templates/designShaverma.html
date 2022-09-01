@@ -10,7 +10,7 @@
 <h1>Design your shaverma!</h1>
 <img th:src="@{/images/shaverma.jpg}"/>
 
-<form method="POST" th:object="${shaverma}">
+<form method="POST" th:object="${shaverma}" th:action="@{/design}" id="shavermaForm">
 
     <span class="validationError"
           th:if="${#fields.hasErrors('ingredients')}"

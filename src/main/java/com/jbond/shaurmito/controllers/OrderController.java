@@ -29,7 +29,16 @@ public class OrderController {
 
   @GetMapping("/current")
   public String orderForm(Model model) {
-    model.addAttribute("order", new Order());
+    Order order = new Order();
+    order.setCcCvv("123");
+    order.setCcNumber("4473377449176561");
+    order.setCcExpiration("04/23");
+    order.setDeliveryName("dsfdsf");
+    order.setDeliveryCity("dsfdsf");
+    order.setDeliveryState("12");
+    order.setDeliveryStreet("dsfdsf");
+    order.setDeliveryZip("44-4444");
+    model.addAttribute("order", order);
     return "orderForm";
   }
 

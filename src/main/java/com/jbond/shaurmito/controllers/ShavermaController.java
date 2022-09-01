@@ -65,6 +65,7 @@ public class ShavermaController {
             return "designShaverma";
         }
 
+        shaverma.createdAt();
         Shaverma savedShaverma = shavermaRepository.save(shaverma);
         order.addDesignShaverma(savedShaverma);
 
