@@ -1,84 +1,51 @@
 package com.jbond.shaurmito.controllers;
 
-import com.jbond.shaurmito.entity.Ingredient;
-import com.jbond.shaurmito.entity.Order;
 import com.jbond.shaurmito.entity.Shaverma;
-import com.jbond.shaurmito.repo.IngredientRepository;
 import com.jbond.shaurmito.repo.ShavermaRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.hateoas.EntityLinks;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Slf4j
-@Controller
-@RequestMapping("/design")
-@SessionAttributes("order")
+@RestController
+@RequestMapping(value = "/design", produces = "application/json")
+@CrossOrigin(origins = "*")
 public class ShavermaController {
-    private final IngredientRepository ingredientRepository;
-    private ShavermaRepository shavermaRepository;
+    @Autowired
+    EntityLinks entityLinks;
+    private final ShavermaRepository shavermaRepository;
 
     @Autowired
-    public ShavermaController(IngredientRepository ingredientRepository, ShavermaRepository shavermaRepository) {
-        this.ingredientRepository = ingredientRepository;
+    public ShavermaController(ShavermaRepository shavermaRepository) {
         this.shavermaRepository = shavermaRepository;
     }
 
-    @ModelAttribute(name = "shaverma")
-    public Shaverma shaverma() {
-        return new Shaverma();
+    @GetMapping("/{id}")
+    public ResponseEntity<Shaverma> shavermaById(@PathVariable("id") Long id) {
+        Optional<Shaverma> shaverma = shavermaRepository.findById(id);
+        return shaverma.isPresent() ?
+                new ResponseEntity<Shaverma>(shaverma.get(), HttpStatus.OK) :
+                new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
-    @ModelAttribute("order")
-    public Order order() {
-        return new Order();
+    @GetMapping("/recent")
+    public Iterable<Shaverma> recentShavermas() {
+        PageRequest page = PageRequest.of(0, 12, Sort.by("createdAt").descending());
+        return shavermaRepository.findAll(page).getContent();
     }
 
-    @GetMapping
-    public String showShavermaForm(Model model){
-
-        List<Ingredient> ingredients = new ArrayList<>();
-        ingredientRepository.findAll().forEach(ingr -> ingredients.add(ingr));
-
-        Ingredient.Type[] types = Ingredient.Type.values();
-        for (Ingredient.Type type : types) {
-            model.addAttribute(type.toString().toLowerCase(),
-                    filterByType(ingredients, type));
-        }
-
-        return "designShaverma";
-    }
-
-    @PostMapping
-    public String processShaverma(@Valid Shaverma shaverma, Errors errors, @ModelAttribute Order order){
+    @PostMapping(consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Shaverma processShaverma(@RequestBody Shaverma shaverma) {
         log.info(shaverma.toString());
 
-        if (errors.hasErrors()) {
-            log.info(errors.toString());
-            return "designShaverma";
-        }
-
-        shaverma.createdAt();
-        Shaverma savedShaverma = shavermaRepository.save(shaverma);
-        order.addDesignShaverma(savedShaverma);
-
-        log.info(savedShaverma.toString());
-        return "redirect:/orders/current";
+        return shavermaRepository.save(shaverma);
     }
-
-    private List<Ingredient> filterByType(List<Ingredient> ingredients, Ingredient.Type type) {
-        return ingredients
-                .stream()
-                .filter(x -> x.getType().equals(type))
-                .collect(Collectors.toList());
-    }
-
-
 }

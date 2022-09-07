@@ -1,8 +1,8 @@
 package com.jbond.shaurmito.repo;
 
 import com.jbond.shaurmito.entity.Shaverma;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface ShavermaRepository extends CrudRepository<Shaverma, Long> {
+public interface ShavermaRepository extends PagingAndSortingRepository<Shaverma, Long> {
 
 }
