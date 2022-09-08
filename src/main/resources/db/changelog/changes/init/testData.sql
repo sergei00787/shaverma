@@ -23,9 +23,9 @@ insert into shaverma_schm.SHAVERMA_INGREDIENTS(SHAVERMA_ID, INGREDIENTS_ID) valu
 insert into shaverma_schm.SHAVERMA_INGREDIENTS(SHAVERMA_ID, INGREDIENTS_ID) values (3, 'PTFR');
 
 insert into SHAVERMA_SCHM.SHAVERMA_ORDER(ID, DELIVERY_NAME,DELIVERY_STREET, DELIVERY_CITY, DELIVERY_STATE,
-                                         DELIVERY_ZIP, CC_NUMBER, CC_EXPIRATION, CC_CVV, PLACED_AT)
-                                         values (1, 'DELIVERY1', 'street', 'city', 'CT', 156479,
-                                                 2134324123, '02/23', 123, '2025-06-10');
+DELIVERY_ZIP, CC_NUMBER, CC_EXPIRATION, CC_CVV, PLACED_AT)
+values (1, 'DELIVERY1', 'street', 'city', 'CT', 156479,
+2134324123, '02/23', 123, '2025-06-10');
 
 insert into SHAVERMA_SCHM.SHAVERMA_ORDER_SHAVERMAS(SHAVERMAORDER, SHAVERMA) values (1, 1);
 insert into SHAVERMA_SCHM.SHAVERMA_ORDER_SHAVERMAS(SHAVERMAORDER, SHAVERMA) values (1, 2);

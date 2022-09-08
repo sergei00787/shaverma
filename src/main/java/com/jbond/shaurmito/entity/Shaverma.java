@@ -1,6 +1,8 @@
 package com.jbond.shaurmito.entity;
 
 import lombok.Data;
+import org.springframework.data.rest.core.annotation.RestResource;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -10,6 +12,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(schema = "shaverma_schm")
+@RestResource(rel="shavermas", path = "shavermaoes")
 public class Shaverma {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "shaverma_seq")
