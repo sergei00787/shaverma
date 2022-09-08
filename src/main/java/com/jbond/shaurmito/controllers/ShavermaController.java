@@ -6,12 +6,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.hateoas.EntityLinks;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Links;
 
 import java.util.Optional;
+
+import static org.springframework.hateoas.server.core.DummyInvocationUtils.methodOn;
+import static org.springframework.hateoas.server.core.WebHandler.linkTo;
+
 
 @Slf4j
 @RestController
@@ -19,7 +24,7 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class ShavermaController {
     @Autowired
-    EntityLinks entityLinks;
+    Links entityLinks;
     private final ShavermaRepository shavermaRepository;
 
     @Autowired
@@ -28,10 +33,14 @@ public class ShavermaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Shaverma> shavermaById(@PathVariable("id") Long id) {
+    public EntityModel<Shaverma> shavermaById(@PathVariable("id") Long id) {
         Optional<Shaverma> shaverma = shavermaRepository.findById(id);
         return shaverma.isPresent() ?
-                new ResponseEntity<Shaverma>(shaverma.get(), HttpStatus.OK) :
+                EntityModel.of(shaverma.get(),
+                        linkTo(methodOn(ShavermaController.class).one(id)).withSelfRel(),
+                        linkTo(methodOn(ShavermaController.class).all()).withRel("employees")):
+
+        new ResponseEntity<Shaverma>( HttpStatus.OK) :
                 new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
