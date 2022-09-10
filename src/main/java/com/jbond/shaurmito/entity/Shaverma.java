@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(schema = "shaverma_schm")
-@RestResource(rel="shavermas", path = "shavermaoes")
+@RestResource(rel="shavermas", path = "shavermas")
 public class Shaverma {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "shaverma_seq")
